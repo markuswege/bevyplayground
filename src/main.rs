@@ -1,7 +1,7 @@
 use bevy::prelude::*;
-use iyes_perf_ui::{PerfUiPlugin, PerfUiRoot};
 use iyes_perf_ui::diagnostics::PerfUiEntryFPS;
 use iyes_perf_ui::prelude::PerfUiEntryFPSWorst;
+use iyes_perf_ui::{PerfUiPlugin, PerfUiRoot};
 
 fn main() {
     App::new()
