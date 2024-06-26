@@ -9,12 +9,15 @@ fn main() {
         .add_plugins(bevy::diagnostic::FrameTimeDiagnosticsPlugin)
         .add_plugins(PerfUiPlugin)
         .add_systems(Startup, setup)
-        .add_systems(Update, (
-            sprite_movement,
-            ship_movement_input,
-            confine_player_to_screen,
-            bullet_firing
-        ))
+        .add_systems(
+            Update,
+            (
+                sprite_movement,
+                ship_movement_input,
+                confine_player_to_screen,
+                bullet_firing,
+            ),
+        )
         .insert_resource(ClearColor(Color::rgb(0.0, 0.0, 0.0)))
         .run();
 }
@@ -62,32 +65,43 @@ fn ship_movement_input(
 ) {
     let mut sprite_movement = player.single_mut();
 
-    if keyboard_input.just_pressed(KeyCode::KeyA) || keyboard_input.just_pressed(KeyCode::ArrowLeft) {
+    if keyboard_input.just_pressed(KeyCode::KeyA) || keyboard_input.just_pressed(KeyCode::ArrowLeft)
+    {
         sprite_movement.direction.x = -1.0;
-    } else if (keyboard_input.just_released(KeyCode::KeyA) || keyboard_input.just_released(KeyCode::ArrowLeft))
-        && sprite_movement.direction.x < 0.0 {
+    } else if (keyboard_input.just_released(KeyCode::KeyA)
+        || keyboard_input.just_released(KeyCode::ArrowLeft))
+        && sprite_movement.direction.x < 0.0
+    {
         sprite_movement.direction.x = 0.0;
     }
 
-    if keyboard_input.just_pressed(KeyCode::KeyD) || keyboard_input.just_pressed(KeyCode::ArrowRight) {
+    if keyboard_input.just_pressed(KeyCode::KeyD)
+        || keyboard_input.just_pressed(KeyCode::ArrowRight)
+    {
         sprite_movement.direction.x = 1.0;
-    } else if (keyboard_input.just_released(KeyCode::KeyD) || keyboard_input.just_released(KeyCode::ArrowRight))
-        && sprite_movement.direction.x > 0.0 {
+    } else if (keyboard_input.just_released(KeyCode::KeyD)
+        || keyboard_input.just_released(KeyCode::ArrowRight))
+        && sprite_movement.direction.x > 0.0
+    {
         sprite_movement.direction.x = 0.0;
     }
 
     if keyboard_input.just_pressed(KeyCode::KeyW) || keyboard_input.just_pressed(KeyCode::ArrowUp) {
         sprite_movement.direction.y = 1.0;
-    } else if (keyboard_input.just_released(KeyCode::KeyW) || keyboard_input.just_released(KeyCode::ArrowUp))
-        && sprite_movement.direction.y > 0.0 {
+    } else if (keyboard_input.just_released(KeyCode::KeyW)
+        || keyboard_input.just_released(KeyCode::ArrowUp))
+        && sprite_movement.direction.y > 0.0
+    {
         sprite_movement.direction.y = 0.0;
     }
 
-
-    if keyboard_input.just_pressed(KeyCode::KeyS) || keyboard_input.just_pressed(KeyCode::ArrowDown) {
+    if keyboard_input.just_pressed(KeyCode::KeyS) || keyboard_input.just_pressed(KeyCode::ArrowDown)
+    {
         sprite_movement.direction.y = -1.0;
-    } else if (keyboard_input.just_released(KeyCode::KeyS) || keyboard_input.just_released(KeyCode::ArrowDown))
-        && sprite_movement.direction.y < 0.0 {
+    } else if (keyboard_input.just_released(KeyCode::KeyS)
+        || keyboard_input.just_released(KeyCode::ArrowDown))
+        && sprite_movement.direction.y < 0.0
+    {
         sprite_movement.direction.y = 0.0;
     }
 }
@@ -118,7 +132,6 @@ fn confine_player_to_screen(
     }
 }
 
-
 fn bullet_firing(
     mut cmd: Commands,
     mut player: Query<(&Transform, &mut CooldownTimer), With<Player>>,
@@ -141,7 +154,7 @@ fn bullet_firing(
             SpriteMovement {
                 direction: Vec3::Y,
                 speed: 500.0,
-            }
+            },
         ));
         timer.reset();
     }
