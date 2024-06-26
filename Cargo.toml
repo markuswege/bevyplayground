@@ -1,0 +1,33 @@
+[package]
+name = "game"
+version = "0.1.0"
+publish = false
+authors = ["Markus Wege <hypersurf@gmail.com>"] # ToDo: you are the author ;)
+edition = "2021"
+exclude = ["dist", "build", "assets", "credits"]
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.dev]
+opt-level = 1
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+strip = true
+
+[profile.dist]
+inherits = "release"
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+
+[dependencies]
+bevy = { version = "0.13"}
+
+
+[target.x86_64-pc-windows-msvc]
+linker = "rust-lld.exe"
